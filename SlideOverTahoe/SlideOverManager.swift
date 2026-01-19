@@ -45,6 +45,7 @@ final class SlideOverManager: ObservableObject {
 
     // Sync the target window frame while visible (handles manual move/resize)
     private var frameSyncTimer: Timer?
+    private var isAnimatingMove: Bool = false
 
     func dock(axWindow: AXUIElement, ownerPID: pid_t, side: DockState.Side, grip: CGFloat = 4, settings: EdgeSettings) {
         guard let frame = getFrame(axWindow) else { return }
@@ -341,7 +342,7 @@ final class SlideOverManager: ObservableObject {
     }
 
     private func syncFrameIfNeeded() {
-        guard var s = state, !s.isHidden else { return }
+        guard var s = state, !s.isHidden, !isAnimatingMove else { return }
         guard let current = getFrame(s.axWindow) else { return }
 
         // Ignore tiny jitters
@@ -445,6 +446,7 @@ final class SlideOverManager: ObservableObject {
         let steps = 14
         let duration: TimeInterval = 0.20
         let interval = duration / Double(steps)
+        isAnimatingMove = true
 
         for i in 1...steps {
             let t = CGFloat(i) / CGFloat(steps)
@@ -452,6 +454,9 @@ final class SlideOverManager: ObservableObject {
             let y = start.y + (dest.y - start.y) * t
             DispatchQueue.main.asyncAfter(deadline: .now() + interval * Double(i)) {
                 self.setPosition(axWindow, CGPoint(x: x, y: y))
+                if i == steps {
+                    self.isAnimatingMove = false
+                }
             }
         }
     }
