@@ -63,6 +63,9 @@ final class SlideOverManager: ObservableObject {
         )
         state = s
         hide(animated: false)
+
+        // Ensure app activation monitoring is active even before first reveal.
+        startInactivityMonitoring()
     }
 
     func updateSettings(_ settings: EdgeSettings) {
