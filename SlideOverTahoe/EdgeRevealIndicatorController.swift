@@ -12,10 +12,11 @@ final class EdgeRevealIndicatorController: NSObject {
         hide()
 
         let indicatorSize = CGSize(width: 52, height: 92)
+        let normalizedFrame = normalizeWindowFrame(windowFrame, in: screen.frame)
         let x = side == .left
             ? screen.frame.minX + gripWidth
             : screen.frame.maxX - gripWidth - indicatorSize.width
-        let y = windowFrame.midY - indicatorSize.height / 2
+        let y = normalizedFrame.midY - indicatorSize.height / 2
         let clampedY = min(max(y, screen.frame.minY + 10), screen.frame.maxY - indicatorSize.height - 10)
         let frame = CGRect(origin: CGPoint(x: x, y: clampedY), size: indicatorSize)
 
@@ -102,6 +103,22 @@ final class EdgeRevealIndicatorController: NSObject {
         if !indicatorFrame.contains(location) && !edgeFrame.contains(location) {
             hide()
         }
+    }
+
+    private func normalizeWindowFrame(_ frame: CGRect, in screenFrame: CGRect) -> CGRect {
+        let mid = CGPoint(x: frame.midX, y: frame.midY)
+        if screenFrame.contains(mid) {
+            return frame
+        }
+
+        let flippedY = screenFrame.maxY - frame.origin.y - frame.size.height
+        let flipped = CGRect(x: frame.origin.x, y: flippedY, width: frame.size.width, height: frame.size.height)
+        let flippedMid = CGPoint(x: flipped.midX, y: flipped.midY)
+        if screenFrame.contains(flippedMid) {
+            return flipped
+        }
+
+        return frame
     }
 
     private func applyCornerMask(to view: NSView, side: DockState.Side, radius: CGFloat) {
