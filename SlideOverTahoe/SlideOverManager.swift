@@ -255,14 +255,12 @@ final class SlideOverManager: ObservableObject {
               let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else {
             return
         }
-        let previousActivePID = lastActivatedPID
-
         // If the docked app becomes active, cancel any pending hide and reveal if currently hidden.
         if app.processIdentifier == s.ownerPID {
             cancelInactivityHide()
 
             if s.isHidden {
-                if shouldSuppressRevealAfterTermination(previousActivePID: previousActivePID) {
+                if shouldSuppressRevealAfterTermination() {
                     lastActivatedPID = app.processIdentifier
                     return
                 }
@@ -309,13 +307,9 @@ final class SlideOverManager: ObservableObject {
         lastTerminationAt = Date()
     }
 
-    private func shouldSuppressRevealAfterTermination(previousActivePID: pid_t?) -> Bool {
-        guard let previousActivePID,
-              let lastTerminationPID,
-              let lastTerminationAt
-        else { return false }
-
-        guard previousActivePID == lastTerminationPID else { return false }
+    private func shouldSuppressRevealAfterTermination() -> Bool {
+        guard let lastTerminationPID, let lastTerminationAt else { return false }
+        guard let ownerPID = state?.ownerPID, lastTerminationPID != ownerPID else { return false }
         return Date().timeIntervalSince(lastTerminationAt) < 1.5
     }
 
