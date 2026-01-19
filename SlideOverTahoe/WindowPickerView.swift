@@ -34,7 +34,6 @@ struct WindowPickerView: View {
             .frame(height: 260)
 
             HStack {
-                Button("Dock Left") { dock(.left) }.disabled(selected == nil)
                 Button("Dock Right") { dock(.right) }.disabled(selected == nil)
                 Button("Show") { manager.show(animated: false) }.disabled(manager.state == nil)
                 Button("Hide") { manager.hide(animated: false) }.disabled(manager.state == nil)

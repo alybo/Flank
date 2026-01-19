@@ -5,14 +5,10 @@ struct SettingsView: View {
     @StateObject private var store = SettingsStore.shared
 
     var body: some View {
-        HStack(spacing: 16) {
-            EdgeColumnView(title: "Левый край", settings: $store.left)
-            Divider()
-            EdgeColumnView(title: "Правый край", settings: $store.right)
-        }
+        EdgeColumnView(title: "Правый край", settings: $store.right)
         .padding(.horizontal, 28)
         .padding(.vertical, 22)
-        .frame(width: 760, height: 420)
+        .frame(width: 420, height: 420)
     }
 }
 

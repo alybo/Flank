@@ -2,7 +2,6 @@ import Cocoa
 
 final class MenuBarController: NSObject {
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.squareLength)
-    private var leftToggleItem: NSMenuItem!
     private var rightToggleItem: NSMenuItem!
 
     override init() {
@@ -22,11 +21,6 @@ final class MenuBarController: NSObject {
         menu.addItem(settingsItem)
 
         menu.addItem(.separator())
-
-        leftToggleItem = NSMenuItem(title: "Левый край", action: #selector(toggleLeftEdge), keyEquivalent: "")
-        leftToggleItem.target = self
-        leftToggleItem.state = SettingsStore.shared.left.isEnabled ? .on : .off
-        menu.addItem(leftToggleItem)
 
         rightToggleItem = NSMenuItem(title: "Правый край", action: #selector(toggleRightEdge), keyEquivalent: "")
         rightToggleItem.target = self
@@ -48,11 +42,6 @@ final class MenuBarController: NSObject {
 
     @objc private func quitApp() {
         NSApp.terminate(nil)
-    }
-
-    @objc private func toggleLeftEdge() {
-        SettingsStore.shared.left.isEnabled.toggle()
-        leftToggleItem.state = SettingsStore.shared.left.isEnabled ? .on : .off
     }
 
     @objc private func toggleRightEdge() {

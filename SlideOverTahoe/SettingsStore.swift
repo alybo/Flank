@@ -4,22 +4,14 @@ import Combine
 final class SettingsStore: ObservableObject {
     static let shared = SettingsStore()
 
-    @Published var left = EdgeSettings()
     @Published var right = EdgeSettings()
 
-    private let keyLeft = "edge_settings_left"
     private let keyRight = "edge_settings_right"
 
     private var cancellables = Set<AnyCancellable>()
 
     private init() {
-        left = load(key: keyLeft) ?? EdgeSettings()
         right = load(key: keyRight) ?? EdgeSettings()
-
-        $left
-            .dropFirst()
-            .sink { [weak self] v in self?.save(v, key: self?.keyLeft ?? "") }
-            .store(in: &cancellables)
 
         $right
             .dropFirst()

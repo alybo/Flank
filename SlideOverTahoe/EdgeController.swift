@@ -62,9 +62,7 @@ final class EdgeController {
                 effective.selectedPID = nil
 
                 // Persist migration
-                if side == .left {
-                    SettingsStore.shared.left = effective
-                } else {
+                if side == .right {
                     SettingsStore.shared.right = effective
                 }
             }
