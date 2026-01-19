@@ -82,6 +82,8 @@ final class EdgeController {
         }
 
         let pid = app.processIdentifier
+        let gripWidth = max(1, effective.gripWidth)
+        let overlayWidth = max(2, effective.overlayWidth)
 
         // If the same app/window is already docked on this edge, just update settings.
         if let st = manager.state, st.ownerPID == pid {
@@ -89,6 +91,9 @@ final class EdgeController {
             overlay.onEnter = { [weak self] in
                 self?.scheduleReveal(delay: effective.revealDelay)
             }
+            let frame = manager.currentFrame() ?? NSScreen.main?.frame ?? .zero
+            let screen = NSScreen.screens.first { $0.frame.contains(CGPoint(x: frame.midX, y: frame.midY)) } ?? NSScreen.main!
+            overlay.showOnScreen(side: side, screen: screen, width: CGFloat(overlayWidth))
             return
         }
 
@@ -99,7 +104,7 @@ final class EdgeController {
             return
         }
 
-        manager.dock(axWindow: axWindow, ownerPID: pid, side: side, grip: 4, settings: effective)
+        manager.dock(axWindow: axWindow, ownerPID: pid, side: side, grip: CGFloat(gripWidth), settings: effective)
 
         // Place overlay on the screen where the window is
         let frame = manager.currentFrame() ?? NSScreen.main?.frame ?? .zero
@@ -109,7 +114,7 @@ final class EdgeController {
             self?.scheduleReveal(delay: effective.revealDelay)
         }
 
-        overlay.showOnScreen(side: side, screen: screen, width: 6)
+        overlay.showOnScreen(side: side, screen: screen, width: CGFloat(overlayWidth))
     }
 
     private func scheduleReveal(delay: TimeInterval) {

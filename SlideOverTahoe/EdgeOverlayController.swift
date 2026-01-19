@@ -6,6 +6,7 @@ final class EdgeOverlayController: NSObject {
     var onEnter: (() -> Void)?
 
     func showOnScreen(side: DockState.Side, screen: NSScreen, width: CGFloat = 6) {
+        hide()
         let frame = screen.frame
 
         let overlayFrame: CGRect
