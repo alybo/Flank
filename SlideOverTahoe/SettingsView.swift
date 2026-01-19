@@ -10,7 +10,8 @@ struct SettingsView: View {
             Divider()
             EdgeColumnView(title: "Правый край", settings: $store.right)
         }
-        .padding(14)
+        .padding(.horizontal, 28)
+        .padding(.vertical, 22)
         .frame(width: 760, height: 420)
     }
 }
@@ -25,9 +26,10 @@ private struct EdgeColumnView: View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title).font(.headline)
 
-            Toggle("Включить край", isOn: $settings.isEnabled)
+            Toggle("Включить \(title.lowercased())", isOn: $settings.isEnabled)
+                .font(.headline)
 
-            VStack(spacing: 12) {
+            VStack(spacing: 14) {
                 HStack(spacing: 8) {
                     Picker("Программа", selection: Binding<String?>(
                         get: { settings.selectedBundleID },
