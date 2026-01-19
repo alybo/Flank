@@ -132,10 +132,12 @@ final class EdgeRevealIndicatorController: NSObject {
             gradientLayer.startPoint = CGPoint(x: 0.5, y: 1)
             gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
             gradientLayer.mask = maskLayer
+            maskLayer.fillRule = .evenOdd
 
             borderLayer.fillColor = NSColor.clear.cgColor
             borderLayer.strokeColor = NSColor.white.withAlphaComponent(0.3).cgColor
             borderLayer.lineWidth = 1
+            borderLayer.fillRule = .evenOdd
 
             chevronLayer.fillColor = NSColor.clear.cgColor
             chevronLayer.strokeColor = NSColor.black.withAlphaComponent(0.85).cgColor
@@ -147,32 +149,19 @@ final class EdgeRevealIndicatorController: NSObject {
         private func updatePaths() {
             let rect = bounds
             let radius = rect.width / 2
-            let indentation = rect.width * 0.44
-            let centerY = rect.midY
-            let topY = rect.maxY - 10
-            let bottomY = rect.minY + 10
-            let outerX = side == .left ? rect.maxX : rect.minX
-            let innerX = side == .left ? rect.minX + indentation : rect.maxX - indentation
-
+            let outerRect = rect.insetBy(dx: 0, dy: 8)
             let bodyPath = CGMutablePath()
-            bodyPath.move(to: CGPoint(x: outerX, y: topY - radius))
-            bodyPath.addArc(center: CGPoint(x: outerX, y: topY - radius),
-                            radius: radius,
-                            startAngle: .pi / 2,
-                            endAngle: -.pi / 2,
-                            clockwise: true)
-            bodyPath.addCurve(to: CGPoint(x: innerX, y: centerY),
-                              control1: CGPoint(x: outerX, y: centerY + 24),
-                              control2: CGPoint(x: innerX, y: centerY + 18))
-            bodyPath.addCurve(to: CGPoint(x: outerX, y: bottomY + radius),
-                              control1: CGPoint(x: innerX, y: centerY - 18),
-                              control2: CGPoint(x: outerX, y: centerY - 24))
-            bodyPath.addArc(center: CGPoint(x: outerX, y: bottomY + radius),
-                            radius: radius,
-                            startAngle: -.pi / 2,
-                            endAngle: .pi / 2,
-                            clockwise: true)
-            bodyPath.closeSubpath()
+            bodyPath.addRoundedRect(in: outerRect, cornerWidth: radius, cornerHeight: radius)
+
+            let notchRadius = rect.height * 0.28
+            let notchCenterX = side == .left
+                ? rect.maxX - rect.width * 0.62
+                : rect.minX + rect.width * 0.62
+            let notchCenter = CGPoint(x: notchCenterX, y: rect.midY)
+            bodyPath.addEllipse(in: CGRect(x: notchCenter.x - notchRadius,
+                                           y: notchCenter.y - notchRadius,
+                                           width: notchRadius * 2,
+                                           height: notchRadius * 2))
 
             gradientLayer.frame = rect
             maskLayer.frame = rect
@@ -184,7 +173,8 @@ final class EdgeRevealIndicatorController: NSObject {
             let chevronPath = CGMutablePath()
             let chevronWidth: CGFloat = 9
             let chevronHeight: CGFloat = 20
-            let chevronX = side == .left ? rect.minX + indentation + 5 : rect.maxX - indentation - 5
+            let chevronX = notchCenter.x
+            let centerY = rect.midY
             chevronPath.move(to: CGPoint(x: chevronX + (side == .left ? chevronWidth : -chevronWidth), y: centerY + chevronHeight / 2))
             chevronPath.addLine(to: CGPoint(x: chevronX, y: centerY))
             chevronPath.addLine(to: CGPoint(x: chevronX + (side == .left ? chevronWidth : -chevronWidth), y: centerY - chevronHeight / 2))
