@@ -133,6 +133,7 @@ final class EdgeRevealIndicatorController: NSObject {
             gradientLayer.endPoint = CGPoint(x: 0.5, y: 0)
             gradientLayer.mask = maskLayer
             maskLayer.fillRule = .evenOdd
+            maskLayer.fillColor = NSColor.black.cgColor
 
             borderLayer.fillColor = NSColor.clear.cgColor
             borderLayer.strokeColor = NSColor.white.withAlphaComponent(0.3).cgColor
@@ -153,10 +154,8 @@ final class EdgeRevealIndicatorController: NSObject {
             let bodyPath = CGMutablePath()
             bodyPath.addRoundedRect(in: outerRect, cornerWidth: radius, cornerHeight: radius)
 
-            let notchRadius = rect.height * 0.28
-            let notchCenterX = side == .left
-                ? rect.maxX - rect.width * 0.62
-                : rect.minX + rect.width * 0.62
+            let notchRadius = rect.height * 0.22
+            let notchCenterX = rect.midX
             let notchCenter = CGPoint(x: notchCenterX, y: rect.midY)
             bodyPath.addEllipse(in: CGRect(x: notchCenter.x - notchRadius,
                                            y: notchCenter.y - notchRadius,
