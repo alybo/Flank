@@ -154,8 +154,10 @@ final class EdgeRevealIndicatorController: NSObject {
             let bodyPath = CGMutablePath()
             bodyPath.addRoundedRect(in: outerRect, cornerWidth: radius, cornerHeight: radius)
 
-            let notchRadius = rect.height * 0.22
-            let notchCenterX = rect.midX
+            let notchRadius = rect.height * 0.2
+            let notchCenterX = side == .left
+                ? rect.maxX + notchRadius * 0.35
+                : rect.minX - notchRadius * 0.35
             let notchCenter = CGPoint(x: notchCenterX, y: rect.midY)
             bodyPath.addEllipse(in: CGRect(x: notchCenter.x - notchRadius,
                                            y: notchCenter.y - notchRadius,
