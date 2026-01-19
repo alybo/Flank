@@ -39,7 +39,9 @@ final class SlideOverManager: ObservableObject {
     // Inactivity hide (when user switches to another app)
     private var inactiveHideTimer: Timer?
     private var workspaceObservers: [NSObjectProtocol] = []
-    private var lastExternalTerminationAt: Date?
+    private var lastActivatedPID: pid_t?
+    private var lastTerminationPID: pid_t?
+    private var lastTerminationAt: Date?
 
     // Sync the target window frame while visible (handles manual move/resize)
     private var frameSyncTimer: Timer?
@@ -251,13 +253,15 @@ final class SlideOverManager: ObservableObject {
               let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else {
             return
         }
+        let previousActivePID = lastActivatedPID
 
         // If the docked app becomes active, cancel any pending hide and reveal if currently hidden.
         if app.processIdentifier == s.ownerPID {
             cancelInactivityHide()
 
             if s.isHidden {
-                if shouldSuppressRevealAfterTermination() {
+                if shouldSuppressRevealAfterTermination(previousActivePID: previousActivePID) {
+                    lastActivatedPID = app.processIdentifier
                     return
                 }
 
@@ -266,6 +270,7 @@ final class SlideOverManager: ObservableObject {
                     self?.show(animated: true)
                 }
             }
+            lastActivatedPID = app.processIdentifier
             return
         }
 
@@ -288,6 +293,7 @@ final class SlideOverManager: ObservableObject {
         }
 
         scheduleInactivityHide()
+        lastActivatedPID = app.processIdentifier
     }
 
     private func handleAppTerminated(_ notification: Notification) {
@@ -297,14 +303,18 @@ final class SlideOverManager: ObservableObject {
             return
         }
 
-        if app.processIdentifier != s.ownerPID {
-            lastExternalTerminationAt = Date()
-        }
+        lastTerminationPID = app.processIdentifier
+        lastTerminationAt = Date()
     }
 
-    private func shouldSuppressRevealAfterTermination() -> Bool {
-        guard let timestamp = lastExternalTerminationAt else { return false }
-        return Date().timeIntervalSince(timestamp) < 0.6
+    private func shouldSuppressRevealAfterTermination(previousActivePID: pid_t?) -> Bool {
+        guard let previousActivePID,
+              let lastTerminationPID,
+              let lastTerminationAt
+        else { return false }
+
+        guard previousActivePID == lastTerminationPID else { return false }
+        return Date().timeIntervalSince(lastTerminationAt) < 1.5
     }
 
     private func scheduleInactivityHide() {
