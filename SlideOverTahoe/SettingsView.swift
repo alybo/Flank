@@ -6,9 +6,10 @@ struct SettingsView: View {
 
     var body: some View {
         EdgeColumnView(title: "Правый край", settings: $store.right)
-        .padding(.horizontal, 28)
-        .padding(.vertical, 22)
-        .frame(width: 420, height: 420)
+            .padding(.horizontal, 28)
+            .padding(.vertical, 22)
+            .frame(width: 420)
+            .fixedSize(horizontal: false, vertical: true)
     }
 }
 

@@ -5,10 +5,8 @@ struct SlideOverTahoeApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     var body: some Scene {
-        // Оставим обычное окно — удобно для дебага.
-        // Позже можно убрать WindowGroup и оставить только менюбар.
-        WindowGroup {
-            ContentView()
+        Settings {
+            EmptyView()
         }
     }
 }
@@ -19,6 +17,7 @@ final class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationDidFinishLaunching(_ notification: Notification) {
         _ = AppController.shared
         menuBar = MenuBarController()
+        SettingsWindowController.shared.show()
     }
     func applicationWillTerminate(_ notification: Notification) {
             SlideOverManagerRegistry.shared.restoreAll()

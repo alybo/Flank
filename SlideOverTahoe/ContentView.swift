@@ -31,7 +31,8 @@ struct ContentView: View {
                     }
                 }
                 .padding(16)
-                .frame(width: 520, height: 220)
+                .frame(width: 520)
+                .fixedSize(horizontal: false, vertical: true)
             }
         }
         .onAppear {
