@@ -39,6 +39,7 @@ final class SlideOverManager: ObservableObject {
     // Inactivity hide (when user switches to another app)
     private var inactiveHideTimer: Timer?
     private var workspaceObservers: [NSObjectProtocol] = []
+    private var lastExternalTerminationAt: Date?
 
     // Sync the target window frame while visible (handles manual move/resize)
     private var frameSyncTimer: Timer?
@@ -228,6 +229,11 @@ final class SlideOverManager: ObservableObject {
             self?.handleActiveAppChanged(notification)
         }
         workspaceObservers.append(observer)
+
+        let terminateObserver = center.addObserver(forName: NSWorkspace.didTerminateApplicationNotification, object: nil, queue: .main) { [weak self] notification in
+            self?.handleAppTerminated(notification)
+        }
+        workspaceObservers.append(terminateObserver)
     }
 
     func stopInactivityMonitoring() {
@@ -251,6 +257,10 @@ final class SlideOverManager: ObservableObject {
             cancelInactivityHide()
 
             if s.isHidden {
+                if shouldSuppressRevealAfterTermination() {
+                    return
+                }
+
                 // Small delay helps apps that reposition/raise their windows right after activation (e.g. notification click).
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.12) { [weak self] in
                     self?.show(animated: true)
@@ -278,6 +288,23 @@ final class SlideOverManager: ObservableObject {
         }
 
         scheduleInactivityHide()
+    }
+
+    private func handleAppTerminated(_ notification: Notification) {
+        guard let s = state else { return }
+        guard let userInfo = notification.userInfo,
+              let app = userInfo[NSWorkspace.applicationUserInfoKey] as? NSRunningApplication else {
+            return
+        }
+
+        if app.processIdentifier != s.ownerPID {
+            lastExternalTerminationAt = Date()
+        }
+    }
+
+    private func shouldSuppressRevealAfterTermination() -> Bool {
+        guard let timestamp = lastExternalTerminationAt else { return false }
+        return Date().timeIntervalSince(timestamp) < 0.6
     }
 
     private func scheduleInactivityHide() {
