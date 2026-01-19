@@ -11,7 +11,7 @@ final class EdgeRevealIndicatorController: NSObject {
     func show(side: DockState.Side, screen: NSScreen, windowFrame: CGRect, edgeWidth: CGFloat, gripWidth: CGFloat) {
         hide()
 
-        let indicatorSize = CGSize(width: 52, height: 92)
+        let indicatorSize = CGSize(width: 46, height: 92)
         let normalizedFrame = normalizeWindowFrame(windowFrame, in: screen.frame)
         let x = side == .left
             ? screen.frame.minX + gripWidth
@@ -40,39 +40,17 @@ final class EdgeRevealIndicatorController: NSObject {
         panel.ignoresMouseEvents = false
         panel.hasShadow = true
 
-        let effectView = NSVisualEffectView(frame: CGRect(origin: .zero, size: indicatorSize))
-        effectView.material = .fullScreenUI
-        effectView.blendingMode = .withinWindow
-        effectView.state = .active
-        effectView.wantsLayer = true
-        effectView.layer?.cornerRadius = 0
-        effectView.layer?.masksToBounds = true
-        effectView.layer?.borderWidth = 1
-        effectView.layer?.borderColor = NSColor.white.withAlphaComponent(0.18).cgColor
-        effectView.autoresizingMask = [.width, .height]
-        applyCornerMask(to: effectView, side: side, radius: 22)
+        let indicatorView = IndicatorView(frame: CGRect(origin: .zero, size: indicatorSize), side: side)
+        indicatorView.autoresizingMask = [.width, .height]
 
-        let symbolName = side == .left ? "chevron.right" : "chevron.left"
-        let image = NSImage(systemSymbolName: symbolName, accessibilityDescription: nil)
-        let imageView = NSImageView(image: image ?? NSImage())
-        imageView.contentTintColor = NSColor.white.withAlphaComponent(0.95)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.symbolConfiguration = .init(pointSize: 26, weight: .semibold)
-        effectView.addSubview(imageView)
-
-        NSLayoutConstraint.activate([
-            imageView.centerXAnchor.constraint(equalTo: effectView.centerXAnchor),
-            imageView.centerYAnchor.constraint(equalTo: effectView.centerYAnchor)
-        ])
-
-        let trackingView = TrackingView(frame: effectView.bounds)
+        let trackingView = TrackingView(frame: indicatorView.bounds)
         trackingView.onMouseEntered = { [weak self] in
             self?.onActivate?()
         }
         trackingView.onMouseExited = { [weak self] in
             self?.hideIfPointerOutside()
         }
-        trackingView.addSubview(effectView)
+        trackingView.addSubview(indicatorView)
         trackingView.autoresizingMask = [.width, .height]
 
         panel.contentView = trackingView
@@ -120,54 +98,95 @@ final class EdgeRevealIndicatorController: NSObject {
         return frame
     }
 
-    private func applyCornerMask(to view: NSView, side: DockState.Side, radius: CGFloat) {
-        let corners: CornerSet = side == .left ? [.topRight, .bottomRight] : [.topLeft, .bottomLeft]
-        let path = roundedCornerPath(in: view.bounds, radius: radius, corners: corners)
+    private final class IndicatorView: NSView {
+        private let side: DockState.Side
+        private let bodyLayer = CAShapeLayer()
+        private let borderLayer = CAShapeLayer()
+        private let chevronLayer = CAShapeLayer()
 
-        let mask = CAShapeLayer()
-        mask.frame = view.bounds
-        mask.path = path
-        view.layer?.mask = mask
-    }
-
-    private struct CornerSet: OptionSet {
-        let rawValue: Int
-        static let topLeft = CornerSet(rawValue: 1 << 0)
-        static let topRight = CornerSet(rawValue: 1 << 1)
-        static let bottomRight = CornerSet(rawValue: 1 << 2)
-        static let bottomLeft = CornerSet(rawValue: 1 << 3)
-    }
-
-    private func roundedCornerPath(in rect: CGRect, radius: CGFloat, corners: CornerSet) -> CGPath {
-        let path = CGMutablePath()
-        let maxX = rect.maxX
-        let minX = rect.minX
-        let maxY = rect.maxY
-        let minY = rect.minY
-
-        let tl = corners.contains(.topLeft) ? radius : 0
-        let tr = corners.contains(.topRight) ? radius : 0
-        let br = corners.contains(.bottomRight) ? radius : 0
-        let bl = corners.contains(.bottomLeft) ? radius : 0
-
-        path.move(to: CGPoint(x: minX + tl, y: maxY))
-        path.addLine(to: CGPoint(x: maxX - tr, y: maxY))
-        if tr > 0 {
-            path.addArc(center: CGPoint(x: maxX - tr, y: maxY - tr), radius: tr, startAngle: .pi / 2, endAngle: 0, clockwise: true)
+        init(frame frameRect: NSRect, side: DockState.Side) {
+            self.side = side
+            super.init(frame: frameRect)
+            wantsLayer = true
+            layer?.addSublayer(bodyLayer)
+            layer?.addSublayer(borderLayer)
+            layer?.addSublayer(chevronLayer)
+            configureLayers()
         }
-        path.addLine(to: CGPoint(x: maxX, y: minY + br))
-        if br > 0 {
-            path.addArc(center: CGPoint(x: maxX - br, y: minY + br), radius: br, startAngle: 0, endAngle: -.pi / 2, clockwise: true)
+
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
         }
-        path.addLine(to: CGPoint(x: minX + bl, y: minY))
-        if bl > 0 {
-            path.addArc(center: CGPoint(x: minX + bl, y: minY + bl), radius: bl, startAngle: -.pi / 2, endAngle: .pi, clockwise: true)
+
+        override func layout() {
+            super.layout()
+            updatePaths()
         }
-        path.addLine(to: CGPoint(x: minX, y: maxY - tl))
-        if tl > 0 {
-            path.addArc(center: CGPoint(x: minX + tl, y: maxY - tl), radius: tl, startAngle: .pi, endAngle: .pi / 2, clockwise: true)
+
+        private func configureLayers() {
+            bodyLayer.fillColor = NSColor.black.withAlphaComponent(0.65).cgColor
+            bodyLayer.shadowColor = NSColor.black.withAlphaComponent(0.45).cgColor
+            bodyLayer.shadowOpacity = 1
+            bodyLayer.shadowRadius = 10
+            bodyLayer.shadowOffset = CGSize(width: 0, height: -1)
+
+            borderLayer.fillColor = NSColor.clear.cgColor
+            borderLayer.strokeColor = NSColor.white.withAlphaComponent(0.28).cgColor
+            borderLayer.lineWidth = 1
+
+            chevronLayer.fillColor = NSColor.clear.cgColor
+            chevronLayer.strokeColor = NSColor.black.withAlphaComponent(0.8).cgColor
+            chevronLayer.lineWidth = 6
+            chevronLayer.lineCap = .round
+            chevronLayer.lineJoin = .round
         }
-        path.closeSubpath()
-        return path
+
+        private func updatePaths() {
+            let rect = bounds
+            let radius = rect.width / 2
+            let indentation = rect.width * 0.38
+            let centerY = rect.midY
+            let topY = rect.maxY - 8
+            let bottomY = rect.minY + 8
+            let outerX = side == .left ? rect.maxX : rect.minX
+            let innerX = side == .left ? rect.minX + indentation : rect.maxX - indentation
+
+            let bodyPath = CGMutablePath()
+            bodyPath.move(to: CGPoint(x: outerX, y: topY - radius))
+            bodyPath.addArc(center: CGPoint(x: outerX, y: topY - radius),
+                            radius: radius,
+                            startAngle: .pi / 2,
+                            endAngle: -.pi / 2,
+                            clockwise: true)
+            bodyPath.addCurve(to: CGPoint(x: innerX, y: centerY),
+                              control1: CGPoint(x: outerX, y: centerY + 22),
+                              control2: CGPoint(x: innerX, y: centerY + 16))
+            bodyPath.addCurve(to: CGPoint(x: outerX, y: bottomY + radius),
+                              control1: CGPoint(x: innerX, y: centerY - 16),
+                              control2: CGPoint(x: outerX, y: centerY - 22))
+            bodyPath.addArc(center: CGPoint(x: outerX, y: bottomY + radius),
+                            radius: radius,
+                            startAngle: -.pi / 2,
+                            endAngle: .pi / 2,
+                            clockwise: true)
+            bodyPath.closeSubpath()
+
+            bodyLayer.frame = rect
+            bodyLayer.path = bodyPath
+
+            borderLayer.frame = rect
+            borderLayer.path = bodyPath
+
+            let chevronPath = CGMutablePath()
+            let chevronWidth: CGFloat = 10
+            let chevronHeight: CGFloat = 22
+            let chevronX = side == .left ? rect.minX + indentation + 6 : rect.maxX - indentation - 6
+            chevronPath.move(to: CGPoint(x: chevronX + (side == .left ? chevronWidth : -chevronWidth), y: centerY + chevronHeight / 2))
+            chevronPath.addLine(to: CGPoint(x: chevronX, y: centerY))
+            chevronPath.addLine(to: CGPoint(x: chevronX + (side == .left ? chevronWidth : -chevronWidth), y: centerY - chevronHeight / 2))
+
+            chevronLayer.frame = rect
+            chevronLayer.path = chevronPath
+        }
     }
 }
