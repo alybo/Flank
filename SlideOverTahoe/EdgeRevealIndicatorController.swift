@@ -11,10 +11,10 @@ final class EdgeRevealIndicatorController: NSObject {
     func show(side: DockState.Side, screen: NSScreen, windowFrame: CGRect, edgeWidth: CGFloat) {
         hide()
 
-        let indicatorSize = CGSize(width: 44, height: 72)
+        let indicatorSize = CGSize(width: 52, height: 92)
         let x = side == .left ? screen.frame.minX : screen.frame.maxX - indicatorSize.width
         let y = windowFrame.midY - indicatorSize.height / 2
-        let clampedY = min(max(y, screen.frame.minY + 8), screen.frame.maxY - indicatorSize.height - 8)
+        let clampedY = min(max(y, screen.frame.minY + 10), screen.frame.maxY - indicatorSize.height - 10)
         let frame = CGRect(origin: CGPoint(x: x, y: clampedY), size: indicatorSize)
 
         indicatorFrame = frame
@@ -39,18 +39,22 @@ final class EdgeRevealIndicatorController: NSObject {
         panel.hasShadow = true
 
         let effectView = NSVisualEffectView(frame: CGRect(origin: .zero, size: indicatorSize))
-        effectView.material = .hudWindow
+        effectView.material = .fullScreenUI
         effectView.blendingMode = .withinWindow
         effectView.state = .active
         effectView.wantsLayer = true
-        effectView.layer?.cornerRadius = 18
+        effectView.layer?.cornerRadius = 22
+        effectView.layer?.masksToBounds = true
+        effectView.layer?.borderWidth = 1
+        effectView.layer?.borderColor = NSColor.white.withAlphaComponent(0.18).cgColor
         effectView.autoresizingMask = [.width, .height]
 
         let symbolName = side == .left ? "chevron.right" : "chevron.left"
         let image = NSImage(systemSymbolName: symbolName, accessibilityDescription: nil)
         let imageView = NSImageView(image: image ?? NSImage())
-        imageView.contentTintColor = NSColor.white.withAlphaComponent(0.9)
+        imageView.contentTintColor = NSColor.white.withAlphaComponent(0.95)
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.symbolConfiguration = .init(pointSize: 26, weight: .semibold)
         effectView.addSubview(imageView)
 
         NSLayoutConstraint.activate([
