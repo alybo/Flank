@@ -226,6 +226,8 @@ final class SlideOverManager: ObservableObject {
         if !workspaceObservers.isEmpty { return }
         stopInactivityMonitoring()
 
+        lastActivatedPID = NSWorkspace.shared.frontmostApplication?.processIdentifier
+
         let center = NSWorkspace.shared.notificationCenter
         let observer = center.addObserver(forName: NSWorkspace.didActivateApplicationNotification, object: nil, queue: .main) { [weak self] notification in
             self?.handleActiveAppChanged(notification)
