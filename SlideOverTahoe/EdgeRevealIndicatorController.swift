@@ -17,8 +17,7 @@ final class EdgeRevealIndicatorController: NSObject {
             ? screen.frame.minX + gripWidth
             : screen.frame.maxX - gripWidth - indicatorSize.width
         let y = normalizedFrame.midY - indicatorSize.height / 2
-        let clampedY = min(max(y, screen.frame.minY + 10), screen.frame.maxY - indicatorSize.height - 10)
-        let frame = CGRect(origin: CGPoint(x: x, y: clampedY), size: indicatorSize)
+        let frame = CGRect(origin: CGPoint(x: x, y: y), size: indicatorSize)
 
         indicatorFrame = frame
         edgeFrame = CGRect(
