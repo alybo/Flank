@@ -46,6 +46,7 @@ final class SlideOverManager: ObservableObject {
     // Sync the target window frame while visible (handles manual move/resize)
     private var frameSyncTimer: Timer?
     private var isAnimatingMove: Bool = false
+    private var animationToken: Int = 0
 
     func dock(axWindow: AXUIElement, ownerPID: pid_t, side: DockState.Side, grip: CGFloat = 4, settings: EdgeSettings) {
         guard let frame = getFrame(axWindow) else { return }
@@ -440,12 +441,21 @@ final class SlideOverManager: ObservableObject {
             return
         }
 
+        if isAnimatingMove {
+            animationToken += 1
+            isAnimatingMove = false
+            setPosition(axWindow, dest)
+            return
+        }
+
         // “мягкая” анимация шагами (опционально)
         guard let frame = getFrame(axWindow) else { setPosition(axWindow, dest); return }
         let start = frame.origin
         let steps = 14
         let duration: TimeInterval = 0.20
         let interval = duration / Double(steps)
+        animationToken += 1
+        let token = animationToken
         isAnimatingMove = true
 
         for i in 1...steps {
@@ -453,6 +463,7 @@ final class SlideOverManager: ObservableObject {
             let x = start.x + (dest.x - start.x) * t
             let y = start.y + (dest.y - start.y) * t
             DispatchQueue.main.asyncAfter(deadline: .now() + interval * Double(i)) {
+                guard token == self.animationToken else { return }
                 self.setPosition(axWindow, CGPoint(x: x, y: y))
                 if i == steps {
                     self.isAnimatingMove = false
