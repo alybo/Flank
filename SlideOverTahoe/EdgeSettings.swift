@@ -19,6 +19,7 @@ struct EdgeSettings: Codable, Equatable {
 
     var overlayWidth: Double = 6.0
     var gripWidth: Double = 4.0
+    var enableRevealIndicator: Bool = false
 
     init() {}
 
@@ -33,6 +34,7 @@ struct EdgeSettings: Codable, Equatable {
         case isEnabled
         case overlayWidth
         case gripWidth
+        case enableRevealIndicator
     }
 
     init(from decoder: Decoder) throws {
@@ -48,5 +50,6 @@ struct EdgeSettings: Codable, Equatable {
         isEnabled = try container.decodeIfPresent(Bool.self, forKey: .isEnabled) ?? true
         overlayWidth = try container.decodeIfPresent(Double.self, forKey: .overlayWidth) ?? 6.0
         gripWidth = try container.decodeIfPresent(Double.self, forKey: .gripWidth) ?? 4.0
+        enableRevealIndicator = try container.decodeIfPresent(Bool.self, forKey: .enableRevealIndicator) ?? false
     }
 }

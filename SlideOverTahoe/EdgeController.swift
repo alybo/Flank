@@ -4,6 +4,7 @@ final class EdgeController {
     let side: DockState.Side
     let manager = SlideOverManager()
     let overlay = EdgeOverlayController()
+    let indicator = EdgeRevealIndicatorController()
 
     private var revealWorkItem: DispatchWorkItem?
     private var lastSettings = EdgeSettings()
@@ -38,6 +39,7 @@ final class EdgeController {
         // Edge globally disabled → fully restore and do nothing
         if settings.isEnabled == false {
             overlay.hide()
+            indicator.hide()
             if manager.state != nil { manager.restoreAndClear() }
             return
         }
@@ -45,6 +47,7 @@ final class EdgeController {
         // Nothing selected → disable this edge
         if settings.selectedBundleID == nil && settings.selectedPID == nil {
             overlay.hide()
+            indicator.hide()
             if manager.state != nil { manager.restoreAndClear() }
             return
         }
@@ -69,6 +72,7 @@ final class EdgeController {
 
         guard let bundleID = effective.selectedBundleID else {
             overlay.hide()
+            indicator.hide()
             if manager.state != nil { manager.restoreAndClear() }
             return
         }
@@ -77,6 +81,7 @@ final class EdgeController {
         guard let app = NSWorkspace.shared.runningApplications.first(where: { $0.bundleIdentifier == bundleID }) else {
             // App not running yet → keep settings and wait
             overlay.hide()
+            indicator.hide()
             if manager.state != nil { manager.restoreAndClear() }
             return
         }
@@ -88,11 +93,11 @@ final class EdgeController {
         // If the same app/window is already docked on this edge, just update settings.
         if let st = manager.state, st.ownerPID == pid {
             manager.updateSettings(effective)
-            overlay.onEnter = { [weak self] in
-                self?.scheduleReveal(delay: effective.revealDelay)
-            }
             let frame = manager.currentFrame() ?? NSScreen.main?.frame ?? .zero
             let screen = NSScreen.screens.first { $0.frame.contains(CGPoint(x: frame.midX, y: frame.midY)) } ?? NSScreen.main!
+            overlay.onEnter = { [weak self] in
+                self?.handleEdgeEnter(settings: effective, screen: screen)
+            }
             overlay.showOnScreen(side: side, screen: screen, width: CGFloat(overlayWidth))
             return
         }
@@ -100,6 +105,7 @@ final class EdgeController {
         // Resolve AX window (focused or first)
         guard let axWindow = AXWindowResolver.resolveFocusedOrFirstWindow(pid: pid) else {
             overlay.hide()
+            indicator.hide()
             if manager.state != nil { manager.restoreAndClear() }
             return
         }
@@ -111,16 +117,38 @@ final class EdgeController {
         let screen = NSScreen.screens.first { $0.frame.contains(CGPoint(x: frame.midX, y: frame.midY)) } ?? NSScreen.main!
 
         overlay.onEnter = { [weak self] in
-            self?.scheduleReveal(delay: effective.revealDelay)
+            self?.handleEdgeEnter(settings: effective, screen: screen)
         }
 
         overlay.showOnScreen(side: side, screen: screen, width: CGFloat(overlayWidth))
+    }
+
+    private func handleEdgeEnter(settings: EdgeSettings, screen: NSScreen) {
+        guard let state = manager.state, state.isHidden else { return }
+        let overlayWidth = max(2, settings.overlayWidth)
+
+        if settings.enableRevealIndicator {
+            indicator.onActivate = { [weak self] in
+                self?.indicator.hide()
+                self?.manager.show(animated: true)
+            }
+            indicator.show(
+                side: side,
+                screen: screen,
+                windowFrame: state.lastVisibleFrame,
+                edgeWidth: CGFloat(overlayWidth)
+            )
+            return
+        }
+
+        scheduleReveal(delay: settings.revealDelay)
     }
 
     private func scheduleReveal(delay: TimeInterval) {
         revealWorkItem?.cancel()
 
         let work = DispatchWorkItem { [weak self] in
+            self?.indicator.hide()
             self?.manager.show(animated: true)
         }
         revealWorkItem = work

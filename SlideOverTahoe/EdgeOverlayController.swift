@@ -46,6 +46,7 @@ final class EdgeOverlayController: NSObject {
 
 final class TrackingView: NSView {
     var onMouseEntered: (() -> Void)?
+    var onMouseExited: (() -> Void)?
 
     override func updateTrackingAreas() {
         super.updateTrackingAreas()
@@ -62,5 +63,9 @@ final class TrackingView: NSView {
 
     override func mouseEntered(with event: NSEvent) {
         onMouseEntered?()
+    }
+
+    override func mouseExited(with event: NSEvent) {
+        onMouseExited?()
     }
 }

@@ -106,6 +106,8 @@ private struct EdgeColumnView: View {
 
                 GroupBox("Зона срабатывания") {
                     VStack(alignment: .leading, spacing: 10) {
+                        Toggle("Показывать индикатор раскрытия", isOn: $settings.enableRevealIndicator)
+
                         HStack {
                             Text("Ширина области наведения (px)")
                             Spacer()
