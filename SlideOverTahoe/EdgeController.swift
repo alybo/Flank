@@ -136,7 +136,8 @@ final class EdgeController {
                 side: side,
                 screen: screen,
                 windowFrame: state.lastVisibleFrame,
-                edgeWidth: CGFloat(overlayWidth)
+                edgeWidth: CGFloat(overlayWidth),
+                gripWidth: CGFloat(settings.gripWidth)
             )
             return
         }
