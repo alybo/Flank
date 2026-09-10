@@ -1,0 +1,15 @@
+# Xcode local state and build products
+.DS_Store
+xcuserdata/
+*.xcuserstate
+DerivedData/
+build/
+*.xcarchive
+*.dSYM/
+
+# Local secrets
+.env
+.env.*
+!.env.example
+*.p12
+*.mobileprovision

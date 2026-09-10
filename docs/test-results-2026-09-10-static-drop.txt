@@ -1,0 +1,77 @@
+PASS baseline: dock writes an off-screen position
+PASS baseline: ordinary restore returns the original window
+PASS A01: repeated hide preserves restore position
+PASS A02: replacing target restores the old window
+PASS A03: restore cancels queued hide animation
+PASS A04: reversing animation preserves visible destination
+PASS A05: failed AX move must not report hidden
+PASS A06: changing grip updates actual docking geometry
+PASS baseline: missing settings decode with defaults
+PASS A07: persisted settings validate numeric bounds
+PASS A08: failed restore retains recovery information
+PASS A09: disabling inactivity cancels an already scheduled hide
+PASS failed replacement keeps old target and leaves new window alone
+PASS failed replacement can be recovered on retry
+PASS AX error during animation stops further writes
+PASS animation error preserves the safe restore position
+PASS AX success without actual movement is detected by readback
+PASS unexpected AX type is rejected without a crash or move
+PASS failed raise retains recovery information
+PASS grip update immediately moves the hidden window
+PASS completed reveal reaches the original position
+PASS disable during animation restores old window and cannot affect a new session
+PASS animation does not retain manager or outlive its restore on deinit
+PASS inactivity positive control: timer really hides when enabled
+PASS inactivity callback rechecks a cursor that returned
+PASS inactivity callback rechecks the active application
+PASS disabled inactivity cancels a verified pending timer
+PASS cancelled delayed reveal never fires
+PASS only the newest delayed reveal fires
+PASS AX frame converts to AppKit once
+PASS coordinate conversion supports negative origins and an upper display
+PASS non-finite settings and overflowing legacy PID are sanitized
+PASS manual move and resize remain the restore destination
+PASS owner termination releases recovery state even after a failed restore
+PASS edge reveal can reverse an in-flight hide without losing the destination
+PASS selection: reveal uses the pre-drag frame
+PASS selection: re-dragging the same window preserves the safe frame
+PASS selection: invalid safe frame cannot replace or move either window
+PASS lifecycle: stale destruction cannot clear the new target
+PASS lifecycle: confirmed destruction clears state without moving another window
+PASS gesture: suspension blocks accidental edge reveal
+PASS gesture: suspension blocks hide even after settings refresh
+PASS gesture: emergency restore remains available while interaction is suspended
+PASS gesture: ordinary window drag never commits
+PASS gesture: moving content without moving the window never commits
+PASS gesture: resizing cancels capture
+PASS gesture: moved window plus modifiers plus drop commits
+PASS gesture: releasing modifiers after mouseUp cannot cancel commit
+PASS gesture: modifier loss before mouseUp cancels the gesture permanently
+PASS gesture: drop outside the target cancels
+PASS gesture: Escape prevents a later drop
+PASS gesture: crossing to another screen cancels
+PASS gesture: unrelated window motion cannot arm capture
+PASS gesture: AX and AppKit vertical motion use opposite signs
+PASS gesture: modifier matching ignores caps lock but rejects extra keys
+PASS settings: an unknown future modifier preserves other preferences
+PASS displays: only an external right edge can accept a window
+PASS displays: a gap does not make a right-hand display safe for off-screen hiding
+PASS displays: vertically separated screens do not block the right edge
+PASS catalog: extreme finite AX dimensions cannot overflow integer formatting
+PASS catalog: matches the exact second AX element even with identical geometry
+PASS catalog: cannot substitute another window when the selected one disappears
+PASS catalog: malformed AXWindows entries are rejected before casting
+PASS catalog: an AX communication failure remains an error, not an empty list
+PASS reveal: unsupported raise (-25205) still returns the exact window
+PASS reveal: unsupported raise (-25206) still returns the exact window
+PASS reveal: unsupported raise cannot 2026-09-10 16:20:27.771 audit-tests[18406:621086] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+PASS restore: an unsupported size does not block position-only recovery of a hidden window
+PASS AX diagnostics: a size failure retains its operation and error code
+PASS restore: an unsupported position read cannot claim successful recovery
+PASS restore: position read failure remains recoverable on retry
+PASS AX diagnostics: unsupported properties are not described as missing permission
+PASS drop region: fixed right inset and almost full visible height
+PASS drop region: accepts near the top and bottom while leaving screen margins
+PASS drop region: supports displays with negative origins
+PASS drop region: unavailable visible area produces no target
+76/76 passed; 0 failed

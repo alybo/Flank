@@ -1,0 +1,48 @@
+SlideOverTahoe — restoration fixes — 2026-09-10
+Base: 2f2b5f48b6ec7703ab2070cb4c48f8ea81779464 + working-tree changes
+Host: macOS 27.0; Xcode 26.6; Swift 6.3.3; arm64
+Tests: bash scripts/run-audit-tests.sh; exit 0
+AX read/write/raise mocked. Real WindowServer/GUI integration not performed.
+
+debug-build.log: BUILD SUCCEEDED; CODE_SIGNING_ALLOWED=NO; exit 0
+release-build.log: BUILD SUCCEEDED; CODE_SIGNING_ALLOWED=NO; exit 0
+
+PASS baseline: dock writes an off-screen position
+PASS baseline: ordinary restore returns the original window
+PASS A01: repeated hide preserves restore position
+PASS A02: replacing target restores the old window
+PASS A03: restore cancels queued hide animation
+PASS A04: reversing animation preserves visible destination
+PASS A05: failed AX move must not report hidden
+PASS A06: changing grip updates actual docking geometry
+PASS baseline: missing settings decode with defaults
+PASS A07: persisted settings validate numeric bounds
+PASS A08: failed restore retains recovery information
+PASS A09: disabling inactivity cancels an already scheduled hide
+PASS failed replacement keeps old target and leaves new window alone
+PASS failed replacement can be recovered on retry
+PASS AX error during animation stops further writes
+PASS animation error preserves the safe restore position
+PASS AX success without actual movement is detected by readback
+PASS unexpected AX type is rejected without a crash or move
+PASS failed raise retains recovery information
+PASS grip update immediately moves the hidden window
+PASS completed reveal reaches the original position
+PASS disable during animation restores old window and cannot affect a new session
+PASS animation does not retain manager or outlive its restore on deinit
+PASS inactivity positive control: timer really hides when enabled
+PASS inactivity callback rechecks a cursor that returned
+PASS inactivity callback rechecks the active application
+PASS disabled inactivity cancels a verified pending timer
+PASS cancelled delayed reveal never fires
+PASS only the newest delayed reveal fires
+PASS AX frame converts to AppKit once
+PASS coordinate conversion supports negative origins and an upper display
+PASS non-finite settings and overflowing legacy PID are sanitized
+PASS manual move and resize remain the restore destination
+PASS owner termination releases recovery state even after a failed restore
+PASS edge reveal can reverse an in-flight hide without losing the destination
+35/35 passed; 0 failed
+
+Historical audit and baseline retained: AUDIT-2026-09-09.md
+Change details and remaining risks: CHANGES-2026-09-10.md

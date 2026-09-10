@@ -1,0 +1,266 @@
+Проверки 10.09.2026 — стабильность drag и анимация панелей
+
+Регрессионный harness: bash scripts/run-audit-tests.sh, exit 0
+2026-09-10 22:17:53.468 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.468 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.468 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.468 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.469 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.470 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.470 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.471 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.471 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.776 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.776 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:53.841 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:53.841 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.146 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.147 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.147 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.148 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.148 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.148 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.149 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.149 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.149 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.149 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.150 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.150 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.151 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.151 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.151 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.151 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.151 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.152 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.277 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.278 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.278 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.278 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.278 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.279 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.279 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.279 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.279 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.279 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.280 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.280 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.649 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.650 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.651 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.652 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.653 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.653 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.654 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.654 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.654 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.655 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.655 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.655 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.959 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.960 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.961 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.961 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.961 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.962 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:54.962 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:54.962 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:55.266 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:55.267 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:55.267 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:55.267 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:55.267 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:55.267 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:55.570 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:55.571 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.429 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.429 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.557 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.558 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.561 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.561 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.561 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.562 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.562 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.562 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.562 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.563 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.563 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.563 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.563 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.564 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.921 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.921 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.922 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.923 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.924 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.924 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.924 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.925 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.927 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.927 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.927 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.927 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.928 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.928 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.928 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.928 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.929 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.929 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:56.930 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:56.930 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.015 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.015 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.018 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.018 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.322 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.322 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.322 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.323 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.628 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.628 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.629 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.629 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+PASS baseline: dock writes an off-screen position
+PASS baseline: ordinary restore returns the original window
+PASS A01: repeated hide preserves restore position
+PASS A02: replacing target restores the old window
+PASS A03: restore cancels queued hide animation
+PASS A04: reversing animation preserves visible destination
+PASS A05: failed AX move must not report hidden
+PASS A06: changing grip updates actual docking geometry
+PASS baseline: missing settings decode with defaults
+PASS A07: persisted settings validate numeric bounds
+PASS A08: failed restore retains recovery information
+PASS A09: disabling inactivity cancels an already scheduled hide
+PASS failed replacement keeps old target and leaves new window alone
+PASS failed replacement can be recovered on retry
+PASS AX error during animation stops further writes
+PASS animation error preserves the safe restore position
+PASS AX success without actual movement is detected by readback
+PASS unexpected AX type is rejected without a crash or move
+PASS failed raise retains recovery information
+PASS grip update immediately moves the hidden window
+PASS completed reveal reaches the original position
+PASS disable during animation restores old window and cannot affect a new session
+PASS animation does not retain manager or outlive its restore on deinit
+PASS inactivity positive control: timer really hides when enabled
+PASS inactivity callback rechecks a cursor that returned
+PASS inactivity callback rechecks the active application
+PASS disabled inactivity cancels a verified pending timer
+PASS cancelled delayed reveal never fires
+PASS only the newest delayed reveal fires
+PASS AX frame converts to AppKit once
+PASS coordinate conversion supports negative origins and an upper display
+PASS non-finite settings and overflowing legacy PID are sanitized
+PASS manual move and resize remain the restore destination
+PASS owner termination releases recovery state even after a failed restore
+PASS edge reveal can reverse an in-flight hide without losing the destination
+PASS selection: reveal uses the pre-drag frame
+PASS selection: re-dragging the same window preserves the safe frame
+PASS selection: invalid safe frame cannot replace or move either window
+PASS lifecycle: stale destruction cannot clear the new target
+PASS lifecycle: confirmed destruction clears state without moving another window
+PASS gesture: suspension blocks accidental edge reveal
+PASS gesture: suspension blocks hide even after settings refresh
+PASS gesture: emergency restore remains available while interaction is suspended
+PASS gesture: ordinary window drag never commits
+PASS gesture: moving content without moving the window never commits
+PASS gesture: resizing cancels capture
+PASS gesture: moved window plus modifiers plus drop commits
+PASS gesture: releasing modifiers after mouseUp cannot cancel commit
+PASS gesture: modifier loss before mouseUp cancels the gesture permanently
+PASS gesture: drop outside the target cancels
+PASS gesture: Escape prevents a later drop
+PASS gesture: crossing to another screen cancels
+PASS gesture: unrelated window motion cannot arm capture
+PASS gesture: AX and AppKit vertical motion use opposite signs
+PASS gesture: modifier matching ignores caps lock but rejects extra keys
+PASS settings: an unknown future modifier preserves other preferences
+PASS displays: only an external right edge can accept a window
+PASS displays: a gap does not make a right-hand display safe for off-screen hiding
+PASS displays: vertically separated screens do not block the right edge
+PASS catalog: extreme finite AX dimensions cannot overflow integer formatting
+PASS catalog: matches the exact second AX element even with identical geometry
+PASS catalog: cannot substitute another window when the selected one disappears
+PASS catalog: malformed AXWindows entries are rejected before casting
+PASS catalog: an AX communication failure remains an error, not an empty list
+PASS reveal: unsupported raise (-25205) still returns the exact window
+PASS reveal: unsupported raise (-25206) still returns the exact window
+PASS reveal: unsupported raise cannot 2026-09-10 22:17:57.629 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.629 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.630 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.630 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.630 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.630 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.630 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.630 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.631 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.631 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.631 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.631 audit-tests[25151:1119640] Failure on line 688 in function id scheduleApplicationNotification(LSNotificationCode, NSWorkspaceNotificationCenter *): noErr == _LSModifyNotification(notificationID, 1, &code, 0, NULL, NULL, NULL)
+2026-09-10 22:17:57.631 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+2026-09-10 22:17:57.632 audit-tests[25151:1119640] Failure on line 695 in function void unscheduleApplicationNotification(id): noErr == _LSUnscheduleNotificationFunction(notificationID)
+mask a failed position write
+PASS restore: an unsupported size does not block position-only recovery of a hidden window
+PASS AX diagnostics: a size failure retains its operation and error code
+PASS restore: an unsupported position read cannot claim successful recovery
+PASS restore: position read failure remains recoverable on retry
+PASS AX diagnostics: unsupported properties are not described as missing permission
+PASS drop region: Figma width, full screen height and no edge insets
+PASS drop region: accepts drops across the entire screen height
+PASS drop region: supports displays with negative origins
+PASS drop region: unavailable visible area produces no target
+PASS Figma indicator: centered on the display and flush with its right edge
+PASS Figma indicator: negative display origins preserve edge and center alignment
+PASS Figma indicator: unavailable screen produces no panel
+PASS drag stability: delayed AX coordinates do not dismiss a recognized drop region
+PASS drag stability: returning near the starting point does not flicker the region
+PASS drag stability: latched recognition still cancels on modifier release
+PASS drag stability: resizing still cancels after recognition
+PASS panel entrance: cancellation prevents later frame writes and completion
+PASS panel entrance: replacement completes only the newest animation
+PASS panel entrance: Reduce Motion shows the destination immediately
+PASS panel entrance: progress is bounded and eases out
+PASS panel entrance: slides left from beyond the right screen edge to its destination
+PASS panel entrance: cancellation inside initial update cannot restart the timer
+89/89 passed; 0 failed
+
+Debug: BUILD SUCCEEDED, exit 0
+Release: BUILD SUCCEEDED, exit 0
+Подпись отключена (CODE_SIGNING_ALLOWED=NO).
+
+Native panel smoke, exit 0:
+sandbox_extension_issue_file_to_process failed for /tmp/slideover-motion-20260910/Smoke.app: 1 (Operation not permitted)
+PASS: drop starts beyond right edge
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: repeat show preserves panel, animation frame and hit target
+PASS: drop finishes at full-height destination
+PASS: drop hide removes panel and target
+PASS: hide during entrance cancels further frame writes
+PASS: indicator has half-size dimensions
+PASS: indicator starts beyond right edge
+PASS: repeated indicator show does not restart entrance
+INDICATOR actual=(1698.0, 507.0, 30.0, 103.0) expected=(1698.0, 507.25, 30.0, 102.5) visible=true alpha=1.0
+PASS: indicator reaches centered flush-right destination
+PASS: compiled Figma SVG asset loads
+Native panel smoke complete; no AX calls or user window manipulation.
+
+git diff --check: exit 0
+Реальный AX-drag сторонних приложений после изменения не проверялся.

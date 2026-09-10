@@ -1,0 +1,28 @@
+SlideOverTahoe audit — 2026-09-09
+Source commit: 2f2b5f48b6ec7703ab2070cb4c48f8ea81779464
+Host: macOS 27.0 (26A5425a), arm64; Xcode 26.6; Swift 6.3.3
+Production Swift files and Xcode project unchanged.
+Builds: CODE_SIGNING_ALLOWED=NO; no real window integration tests.
+
+debug-build.log: ** BUILD SUCCEEDED **
+release-build.log: ** BUILD SUCCEEDED **
+analyze.log: ** ANALYZE SUCCEEDED **
+xcode-test.log: xcodebuild: error: Scheme SlideOverTahoe is not currently configured for the test action.
+
+Audit harness: actual manager + in-memory AX boundary; exit code 1.
+PASS baseline: dock writes an off-screen position
+PASS baseline: ordinary restore returns the original window
+FAIL A01: repeated hide preserves restore position
+FAIL A02: replacing target restores the old window
+FAIL A03: restore cancels queued hide animation
+FAIL A04: reversing animation preserves visible destination
+FAIL A05: failed AX move must not report hidden
+FAIL A06: changing grip updates actual docking geometry
+PASS baseline: missing settings decode with defaults
+FAIL A07: persisted settings validate numeric bounds
+FAIL A08: failed restore retains recovery information
+FAIL A09: disabling inactivity cancels an already scheduled hide
+3/12 passed; 9 failed
+
+Nine expected-behavior checks fail on the audited baseline; do not suppress failures.
+Full methodology, known limitations, priorities and manual matrix: AUDIT-2026-09-09.md
